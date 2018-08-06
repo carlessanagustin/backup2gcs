@@ -1,0 +1,33 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: localhost
+  gather_facts: False
+  connection: local
+  vars:
+    gc_storage_mode: put
+    gc_storage_permission: private
+    gc_storage_src: "~/Downloads ~/Desktop"
+  vars_files:
+    - ./vault_secret.yml
+  tasks:
+    - name: create timestamp
+      set_fact: actual_date="{{ lookup('pipe','date -u "+%Y-%m-%d"') }}"
+
+    - name: set object name
+      set_fact: gc_storage_object="backup-{{ actual_date }}.tar.gz"
+
+    - name: backup folders to local
+      shell: "./backup.sh {{ actual_date }} {{ gc_storage_src }}"
+
+    - name: upload content
+      gc_storage:
+        bucket: "{{ gc_storage_bucket }}"
+        gs_access_key: "{{ gc_storage_gs_access_key }}"
+        gs_secret_key: "{{ gc_storage_gs_secret_key }}"
+        mode: "{{ gc_storage_mode }}"
+        src: "./{{ gc_storage_object }}"
+        object: "{{ gc_storage_object }}"
+        permission: "{{ gc_storage_permission }}"
+
+    - name: remove local backup file
+      shell: "rm -f ./{{ gc_storage_object }}"
