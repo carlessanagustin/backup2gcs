@@ -1,4 +1,4 @@
-# Local compress folder and upload to Google Cloud Storage bucket
+# Compress and send to Google Cloud Storage
 
 Simple Ansible playbook to compress a folder into a tar.gz file and upload it to a Google Cloud Storage bucket.
 
@@ -16,6 +16,7 @@ Simple Ansible playbook to compress a folder into a tar.gz file and upload it to
 2. Create a random file as an Ansible key: `make ansible_key`
 3. Encrypt `vars_secret.yml` with `ansible_vault.key`: `make encrypt`
 4. Run playbook: `make run`
+5. (optional) Remove line `vault_secret.yml` from `.gitignore` if you want to push your changes.
 
 ## Included files
 
