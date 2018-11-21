@@ -8,6 +8,7 @@ Simple Ansible playbook to compress a folder into a tar.gz file and upload it to
 
 * Make
 * Ansible
+* GCP Service Account credentials: https://docs.ansible.com/ansible/2.5/scenario_guides/guide_gce.html#credentials
 * pwgen (optional)
 
 ## Usage
