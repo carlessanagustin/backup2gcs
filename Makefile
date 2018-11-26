@@ -28,3 +28,4 @@ uninstall:
 
 ansible_key:
 	pwgen 24 50 > ansible_vault.key
+	@# openssl genrsa -out ansible_vault.key 2048
